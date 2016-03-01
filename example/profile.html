@@ -1,0 +1,56 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="example.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="protous.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#logout").click(function(){
+            logout();
+            window.location.assign("./signin.html");
+        });
+    });
+    if (getUsername()==null) {
+      window.location.assign("./signin.html");
+    };
+    </script>
+  </head><body>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="text-center">
+              <username>Username</username>
+            </h1>
+            <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png" class="center-block img-responsive">
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  <username>Username</username>'s profile</h3>
+              </div>
+              <div class="panel-body">
+                <p>Biography:</p>
+                <p>
+                  <biography>I am a user</biography>
+                </p>
+                <p>
+                  <username>username</username>'s email:
+                  <email>example@gmail.com</email>
+                </p>
+              </div>
+            </div>
+            <a class="btn btn-primary" id="logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+<script>
+runSmartTags();
+</script>
+</body></html>
