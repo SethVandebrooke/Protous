@@ -9,13 +9,13 @@ Smart Tags are html tags that represent an output of data. By defining what valu
 var Tags = new Array();
 Tags[0] = "hw|hello world";
 
-The above code states that whereever you place: <hw></hw> it will automatically change it to hello world.
+The above code states that whereever you place: &lt;hw&gt;&lt;/hw&gt; it will automatically change it to hello world.
 Now lets say you want to show the username of whoever is logged in using protous...
 
 var Tags = new Array();
 Tags[0] = "username|"+getUsername();
 
-The above code defines that where there is <username></username> place the username of whoever is logged in.
+The above code defines that where there is &lt;username&gt;&lt;/username&gt; place the username of whoever is logged in.
 
 # Protous includes the following functions:
 
