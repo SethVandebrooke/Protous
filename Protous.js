@@ -29,16 +29,29 @@
 function set(name,value) {
 	localStorage.setItem(name,value);
 }
+
 function get(name) {
 	return localStorage.getItem(name);
 }
+
 function erase(name) {
 	localStorage.removeItem(name);
 }
+
 function clearALLdata() {
 	localStorage.clear();
 	sessionStorage.clear();
 }
+//SMART TAGS
+//if (sessionStorage.getItem("username")!=null) {
+	var user = getUser(getUsername());
+//}
+var Tags = new Array();
+Tags[0] = "username|"+getUsername();
+Tags[1] = "email|"+user.u_email;
+Tags[2] = "biography|"+user.u_biography;
+Tags[3] = "name|"+user.u_name;
+
 
 //User Account Functions
 
@@ -50,6 +63,7 @@ function user(properties) {
 	this.u_password = properties[2];
 	this.u_biography = properties[3];
 }
+
 function RegisterUser(username,properties) {//properties being email password etc... [must be seperated by commas]
 	if (get(username)==null) {
 		if (get("Users")==null) {
@@ -63,6 +77,7 @@ function RegisterUser(username,properties) {//properties being email password et
 		alert("Sorry! That username is already in use!");
 	}
 }
+
 function deleteUserAccount(username) {
 	if (confirm("Are you sure you want to delete your account?")==true) {
 		if (get("Users")==username) {
@@ -73,34 +88,38 @@ function deleteUserAccount(username) {
 		erase(username);
 	}
 }
+
 function Login(username,password) {
 	var userstring = get(username);
 	if (userstring==null) {
 		alert("This user account does not exist!");
 	} else {
 		var me = new user(userstring);
-		if (me.password == password) {
+		if (me.u_password == password) {
 			sessionStorage.setItem("username",me.u_name);
 			alert(username+" is Logged in!");
 		}
 	}
 }
+
 function logout() {
 	if (sessionStorage.getItem('username')!=null) {
 		if (confirm("Are you sure you want to logout?")==true) {
-			sessionStorage.removeItem(sessionStorage.getItem('username'));
+			sessionStorage.removeItem('username');
 		};
 	};
 }
+
 function getUsername() {
 	return sessionStorage.getItem('username');
 }
+
 function getUser(username) {
 	var theuser = get(username);
-	var userstring = theuser.split(",");
-	var me = new user(userstring[0],userstring[1],userstring[2],userstring[3]);
+	var me = new user(theuser);
 	return me;
 }
+
 function updateUser(username,properties) {
 	if (get(username)!=null) {
 		set(username,properties);
@@ -237,4 +256,14 @@ Message.deleteMessage = function(Messagename) {
 		set("Messages",get("Messages").replace(","+Messagename,""));
 	}
 	erase(Messagename);
+}
+
+function runSmartTags() {
+	for (var i = 0; i < Tags.length; i++) {
+		var tag = Tags[i].split("|");
+		var x = document.getElementsByTagName(tag[0]);
+		for (var y = 0; y < x.length; y++) {
+			x[y].innerHTML = tag[1];
+		}
+	}
 }
