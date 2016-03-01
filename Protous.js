@@ -44,7 +44,7 @@ function clearALLdata() {
 
 //User Object Constructor
 function user(properties) {
-	properties = properties.split(",");
+	properties = properties.split("|");
 	this.u_name = properties[0];
 	this.u_email = properties[1];
 	this.u_password = properties[2];
@@ -101,11 +101,16 @@ function getUser(username) {
 	var me = new user(userstring[0],userstring[1],userstring[2],userstring[3]);
 	return me;
 }
+function updateUser(username,properties) {
+	if (get(username)!=null) {
+		set(username,properties);
+	};
+}
 
 //POSTS
 var POST = new Object();
 function APost(properties) {
-	properties = properties.split(",");
+	properties = properties.split("|");
 	this.p_title = properties[0]; //The title of the post
 	this.p_body = properties[1]; //The main post text
 	this.p_date = properties[2]; //When the post was made
@@ -147,7 +152,7 @@ POST.deletePOST = function(postname) {
 //COMMENTS
 var Comment = new Object();
 function AComment(properties) {
-	properties = properties.split(",");
+	properties = properties.split("|");
 	this.c_title = properties[0]; //The title of the Comment
 	this.c_body = properties[1]; //The main Comment text
 	this.c_date = properties[2]; //When the Comment was made
@@ -192,7 +197,7 @@ Comment.deleteComment = function(Commentname) {
 //MESSAGES
 var Message = new Object();
 function AMessage(properties) {
-	properties = properties.split(",");
+	properties = properties.split("|");
 	this.c_body = properties[0]; //The main Message text
 	this.c_date = properties[1]; //When the Message was made
 	this.c_from = properties[2]; //Who it was made by
