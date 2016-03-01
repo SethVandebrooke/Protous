@@ -1,10 +1,12 @@
 # Protous
-Protous.js is a clever javascript library for adding real time backend functionality to your prototypes without needing a server, database or knowledge of a backend programming language.
+Protous.js is a clever javascript library for adding real time backend functionality to your prototypes without needing a server, database or knowledge of a backend programming language. 
 
-Including functions:
+Protous uses javascript's localStorage capabilities to store keys and values in the browser, so users will be remembered even when the computer is shutdown. Protous is perfect for giving a full user experience to your web/hybrid application prototype. It's quick, easy, and powerful.
+
+Includes the following functions:
 
 RegisterUser(username,properties) // Registers a username with the associated user properties
-Use: RegisterUser("John","John Green,Johng@gmail.com,password123,I am John");
+Use: RegisterUser("John","John Green|Johng@gmail.com|password123|I am John");
                           name       email           password    biography
 
 deleteUserAccount(username) //Deletes a user based on the given username
@@ -23,12 +25,12 @@ getUser(username) //Returns an object of the given user
 Use: var user = getUser(getUsername());
 
 updateUser(username,properties) //Updates a users properties
-Use: updateUser("John","")
+Use: updateUser("John","John Green|example@gmail.com|password13|I am the John");
 
 NOTE!
 The following code is the user object constructor. It defines what properties your users will have. Add or remove properties but they must all be equal to a specific (not used otherwise) index of the properties array [which increment downwards].
 function user(properties) {
-	properties = properties.split(",");
+	properties = properties.split("|");
 	this.u_name = properties[0];
 	this.u_email = properties[1];
 	this.u_password = properties[2];
@@ -38,7 +40,7 @@ function user(properties) {
 Post object functions
 
 addPOST(postname,properties) //Adds a post
-Use: POST.addPOST("post1","mypost,this is my post text,12/5/6,John");
+Use: POST.addPOST("post1","mypost|this is my post text|12/5/6|John");
 
 getPOST(postname) //Returns a post object
 Use: var mypost = POST.getPOST("post1");
@@ -47,6 +49,8 @@ listPOSTS() //Returns an array of all post objects
 Use: var myposts = POST.listPOSTS();
 
 updatePOST(postname,properties) //Updates a post
-Use: POST.updatePOST("post1","new title,this is my new post text,12/5/6,John");
+Use: POST.updatePOST("post1","new title|this is my new post text|12/5/6|John");
 
 deletePOST(postname) //Deletes a post
+
+The same syntax for the post object functions applies to the comment and message object functions.
