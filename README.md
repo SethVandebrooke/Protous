@@ -5,6 +5,7 @@ Protous uses javascript's localStorage capabilities to store keys and values in 
 
 #Including Protous Reference File
 How to include the Protous reference file as meta data in the head tag of the HTML document:
+
 <b>&lt;script type="text/javascript" src="http://brookestudios.com/library/protous/protous-v1.1.3.js"&gt; &lt;script&gt;</b>
 
 # Protous includes a Smart Tag system.
