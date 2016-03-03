@@ -7,21 +7,18 @@
     <link rel="stylesheet" href="C:\Users\Seth\Desktop\example\example.css">
     <script type="text/javascript" src="protous.js"></script>
     <script>
-    $(document).ready(function(){
-        $("#submit").click(function(){
-            var username = document.getElementById("username").value;
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            var password2 = document.getElementById("password2").value;
-            var biography = document.getElementById("bio").value;
-            
-            if (password==password2) {
-                RegisterUser(username,username+"|"+email+"|"+password+"|"+biography);
-                Login(username,password);
-                window.location.assign("./profile.html");
-            }
-        });
-    });
+    function submitUser() {
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      var password2 = document.getElementById("password2").value;
+      var biography = document.getElementById("bio").value;
+      if (password==password2) {
+          RegisterUser(username,username+"|"+email+"|"+password+"|"+biography);
+          Login(username,password);
+          window.location.assign("./profile.html");
+      }
+    }
     </script>
   </head><body>
     <div class="section">
@@ -46,7 +43,7 @@
               <div class="form-group">
                 <input class="form-control" id="password2" placeholder="Confirm password" type="password">
               </div>
-              <button type="button" id="submit" class="btn btn-block btn-primary">Sign up!</button>
+              <button class="btn btn-block btn-primary" onclick="submitUser();">Sign up!</button>
             </form>
             <hr>
             <a href="signin.html">I already have an account!</a>

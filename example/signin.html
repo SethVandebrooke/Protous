@@ -7,14 +7,12 @@
     <link href="example.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="protous.js"></script>
     <script>
-    $(document).ready(function(){
-        $("#submit").click(function(){
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            Login(username,password);
-            window.location.assign("./profile.html");
-        });
-    });
+    function loginUser() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      Login(username,password);
+      window.location.assign("./profile.html");
+    }
     </script>
   </head><body>
     <div class="section">
@@ -30,7 +28,7 @@
               <div class="form-group">
                 <input class="form-control" id="password" placeholder="Password" type="password">
               </div>
-              <button type="button" id="submit" class="btn btn-block btn-primary">Sign in</button>
+              <button class="btn btn-block btn-primary" onclick="loginUser();">Sign in</button>
             </form>
             <hr>
             <a href="signup.html" style="text-align:center;">Don't have an account?</a>
