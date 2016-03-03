@@ -19,40 +19,40 @@ The above code defines that where there is &lt;username&gt;&lt;/username&gt; pla
 
 # Protous includes the following functions:
 
-RegisterUser(username,properties) // Registers a username with the associated user properties
+<b>RegisterUser(username,properties)</b> // Registers a username with the associated user properties
 
 Use: RegisterUser("John","John Green|Johng@gmail.com|password123|I am John");
                           name       email           password    biography
 
-deleteUserAccount(username) //Deletes a user based on the given username
+<b>deleteUserAccount(username)</b> //Deletes a user based on the given username
 
 Use: deleteUserAccount("John");
 
-Login(username,password) //Validates the user credentials and stores the username in a session variable
+<b>Login(username,password)</b> //Validates the user credentials and stores the username in a session variable
 
 Use: Login("John","password");
 
-logout() //Delets session variable and logs the user out
+<b>logout()</b> //Delets session variable and logs the user out
 
 Use: logout();
 
-getUsername() //Returns the name of the user that is logged in
+<b>getUsername()</b> //Returns the name of the user that is logged in
 
 Use: var = username = getUsername();
 
-getUser(username) //Returns an object of the given user
+<b>getUser(username)</b> //Returns an object of the given user
 
 Use: var user = getUser(getUsername());
 
-updateUser(username,properties) //Updates a users properties
+<b>updateUser(username,properties)</b> //Updates a users properties
 
 Use: updateUser("John","John Green|example@gmail.com|password13|I am the John");
 
-getProfilePicture(id) //Sets the src value of an image tag to the profile picture data of whoever is logged in
+<b>getProfilePicture(id)</b> //Sets the src value of an image tag to the profile picture data of whoever is logged in
 
 Use: getProfilePicture("profilepic");
 
-uploadProfilePic(id,event); //Uploads and saves the profile picture for the logged in user and sets the src of the given element to the image data
+<b>uploadProfilePic(id,event)</b> //Uploads and saves the profile picture for the logged in user and sets the src of the given element to the image data
 
 Use: &lt;input type="file" accept="image/*" onchange="uploadProfilePic('profile',event)"&gt;
 
@@ -76,23 +76,23 @@ function user(properties) {
 
 Post object functions
 
-addPOST(postname,properties) //Adds a post
+<b>addPOST(postname,properties)</b> //Adds a post
 
 Use: POST.addPOST("post1","mypost|this is my post text|12/5/6|John");
 
-getPOST(postname) //Returns a post object
+<b>getPOST(postname)</b> //Returns a post object
 
 Use: var mypost = POST.getPOST("post1");
 
-listPOSTS() //Returns an array of all post objects
+<b>listPOSTS()</b> //Returns an array of all post objects
 
 Use: var myposts = POST.listPOSTS();
 
-updatePOST(postname,properties) //Updates a post
+<b>updatePOST(postname,properties)</b> //Updates a post
 
 Use: POST.updatePOST("post1","new title|this is my new post text|12/5/6|John");
 
-deletePOST(postname) //Deletes a post
+<b>deletePOST(postname)</b> //Deletes a post
 
 Use: POST.deletePOST("post1");
 
