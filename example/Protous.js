@@ -133,13 +133,13 @@ function getProfilePicture(id) {
 	document.getElementById(id).src = url;
 }
 
-var uploadProfilePic = function(event) {
+var uploadProfilePic = function(id,event) {
     var input = event.target;
     var reader = new FileReader();
     reader.onload = function(){
         var dataURL = reader.result;
         set("profilepic-"+getUsername(),dataURL);
-        var output = document.getElementById('profile');
+        var output = document.getElementById(id);
         output.src = dataURL;
     };
     reader.readAsDataURL(input.files[0]);
