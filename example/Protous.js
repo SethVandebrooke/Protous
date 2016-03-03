@@ -98,7 +98,7 @@ function Login(username,password) {
 	} else {
 		var me = new user(userstring);
 		if (me.u_password == password) {
-			sessionStorage.setItem("username",me.u_name);
+			sessionStorage.setItem("username",username);
 			alert(username+" is Logged in!");
 		}
 	}
