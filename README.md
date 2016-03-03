@@ -48,6 +48,15 @@ updateUser(username,properties) //Updates a users properties
 
 Use: updateUser("John","John Green|example@gmail.com|password13|I am the John");
 
+getProfilePicture(id) //Sets the src value of an image tag to the profile picture data of whoever is logged in
+
+Use: getProfilePicture("profilepic");
+
+uploadProfilePic(id,event); //Uploads and saves the profile picture for the logged in user and sets the src of the given element to the image data
+
+Use: &lt;input type="file" accept="image/*" onchange="uploadProfilePic('profile',event)"&gt;
+
+
 NOTE!
 The following code is the user object constructor. It defines what properties your users will have. Add or remove properties but they must all be equal to a specific (not used otherwise) index of the properties array [which increment downwards].
 function user(properties) {
