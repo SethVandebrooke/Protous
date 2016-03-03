@@ -89,4 +89,4 @@ deletePOST(postname) //Deletes a post
 
 Use: POST.deletePOST("post1");
 
-The same syntax for the post object functions applies to the comment and message object functions.
+The same syntax for the post object functions applies to the comment, message, and friendship object functions.
