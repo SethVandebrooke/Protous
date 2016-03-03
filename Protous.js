@@ -12,7 +12,6 @@
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-
   The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
 
@@ -46,21 +45,24 @@ function clearALLdata() {
 //if (sessionStorage.getItem("username")!=null) {
 	var user = getUser(getUsername());
 //}
+//Tags are defined in the code below
+//Smart Tag Syntax is as follows: tagname|value
+//Smart Tags uses array notation, you can add as many tags as you want... 
+//Just be sure to increment the Tags index value and use valid Smart Tag Syntax
 var Tags = new Array();
 Tags[0] = "username|"+getUsername();
 Tags[1] = "email|"+user.u_email;
 Tags[2] = "biography|"+user.u_biography;
 Tags[3] = "name|"+user.u_name;
 
-
-//User Account Functions
+//USER ACCOUNT FUNCTIONS AND CONSTRUCTORS:
 
 //User Object Constructor
 function user(properties) {
 	properties = properties.split("|");
-	this.u_name = properties[0];
+	this.u_name = properties[0]; //Do not change or remove this property
 	this.u_email = properties[1];
-	this.u_password = properties[2];
+	this.u_password = properties[2]; //Do not change or remove this property
 	this.u_biography = properties[3];
 }
 
@@ -126,7 +128,24 @@ function updateUser(username,properties) {
 	};
 }
 
-//POSTS
+function getProfilePicture(id) {
+	var url = get("profilepic-"+getUsername());
+	document.getElementById(id).src = url;
+}
+
+var uploadProfilePic = function(event) {
+    var input = event.target;
+    var reader = new FileReader();
+    reader.onload = function(){
+        var dataURL = reader.result;
+        set("profilepic-"+getUsername(),dataURL);
+        var output = document.getElementById('profile');
+        output.src = dataURL;
+    };
+    reader.readAsDataURL(input.files[0]);
+};
+
+//POST OBJECT AND METHODS
 var POST = new Object();
 function APost(properties) {
 	properties = properties.split("|");
@@ -135,6 +154,7 @@ function APost(properties) {
 	this.p_date = properties[2]; //When the post was made
 	this.p_author = properties[3]; //Who it was made by
 }
+
 POST.addPOST = function(postname,properties) {
 	if (get("Posts")==null) {
 		set("Posts",postname);
@@ -143,10 +163,12 @@ POST.addPOST = function(postname,properties) {
 	}
 	set(postname,properties);
 }
+
 POST.getPOST = function(postname) {
  	var list = get(postname);
  	return new APost(list);
 }
+
 POST.listPOSTS = function() {
 	var posts = get("Posts");
 	posts = posts.split(",");
@@ -157,9 +179,11 @@ POST.listPOSTS = function() {
 	};
 	return allposts;
 }
+
 POST.updatePOST = function(postname,properties) {
 	set(postname,properties);
 }
+
 POST.deletePOST = function(postname) {
 	if (get("Posts")==postname) {
 		set("Posts",null);
@@ -168,7 +192,8 @@ POST.deletePOST = function(postname) {
 	}
 	erase(postname);
 }
-//COMMENTS
+
+//COMMENTS OBJECT AND METHODS
 var Comment = new Object();
 function AComment(properties) {
 	properties = properties.split("|");
@@ -178,6 +203,7 @@ function AComment(properties) {
 	this.c_author = properties[3]; //Who it was made by
 	this.c_for = properties[4]; //Who it was made by
 }
+
 Comment.addComment = function(Commentname,properties) {
 	if (get("Comments")==null) {
 		set("Comments",Commentname);
@@ -186,10 +212,12 @@ Comment.addComment = function(Commentname,properties) {
 	}
 	set(Commentname,properties);
 }
+
 Comment.getComment = function(Commentname) {
  	var list = get(Commentname);
  	return new AComment(list);
 }
+
 Comment.listComments = function(cfor) {
 	var Comments = get("Comments");
 	Comments = Comments.split(",");
@@ -202,9 +230,11 @@ Comment.listComments = function(cfor) {
 	};
 	return allComments;
 }
+
 Comment.updateComment = function(Commentname,properties) {
 	set(Commentname,properties);
 }
+
 Comment.deleteComment = function(Commentname) {
 	if (get("Comments")==Commentname) {
 		set("Comments",null);
@@ -213,7 +243,8 @@ Comment.deleteComment = function(Commentname) {
 	}
 	erase(Commentname);
 }
-//MESSAGES
+
+//MESSAGES OBJECT AND METHODS
 var Message = new Object();
 function AMessage(properties) {
 	properties = properties.split("|");
@@ -222,6 +253,7 @@ function AMessage(properties) {
 	this.c_from = properties[2]; //Who it was made by
 	this.c_to = properties[3]; //Who it was made for
 }
+
 Message.addMessage = function(Messagename,properties) {
 	if (get("Messages")==null) {
 		set("Messages",Messagename);
@@ -230,10 +262,12 @@ Message.addMessage = function(Messagename,properties) {
 	}
 	set(Messagename,properties);
 }
+
 Message.getMessage = function(Messagename) {
  	var list = get(Messagename);
  	return new AMessage(list);
 }
+
 Message.listMessages = function(to,from) {
 	var Messages = get("Messages");
 	Messages = Messages.split(",");
@@ -246,9 +280,11 @@ Message.listMessages = function(to,from) {
 	};
 	return allMessages;
 }
+
 Message.updateMessage = function(Messagename,properties) {
 	set(Messagename,properties);
 }
+
 Message.deleteMessage = function(Messagename) {
 	if (get("Messages")==Messagename) {
 		set("Messages",null);
@@ -258,6 +294,55 @@ Message.deleteMessage = function(Messagename) {
 	erase(Messagename);
 }
 
+//FRIENDSHIP OBJECT AND METHODS
+var Friendship  = new Object();
+function AFriendship(properties) {
+	properties = properties.split("|");
+	this.c_body = properties[0]; //The main Friendship text
+	this.c_date = properties[1]; //When the Friendship was made
+	this.c_from = properties[2]; //Who it was made by
+	this.c_to = properties[3]; //Who it was made for
+}
+
+Friendship.addFriendship = function(Friendshipname,properties) {
+	if (get("Friendships")==null) {
+		set("Friendships",Friendshipname);
+	} else {
+		set("Friendships",get("Friendships")+","+Friendshipname);
+	}
+	set(Friendshipname,properties);
+}
+
+Friendship.getFriendship = function(Friendshipname) {
+ 	var list = get(Friendshipname);
+ 	return new AFriendship(list);
+}
+
+Friendship.listFriendships = function(to,from) {
+	var Friendships = get("Friendships");
+	Friendships = Friendships.split(",");
+	var allFriendships = new Array();
+	for (var i = 0; i < Friendships.length; i++) {
+		var Friendship = Friendship.getFriendship(Friendships[i]);
+		if (Friendship.m_to == to&&Friendship.m_from ==from) {
+			allFriendships[allFriendships.length++] = Friendship;
+		};
+	};
+	return allFriendships;
+}
+
+Friendship.updateFriendship = function(Friendshipname,properties) {
+	set(Friendshipname,properties);
+}
+
+Friendship.deleteFriendship = function(Friendshipname) {
+	if (get("Friendships")==Friendshipname) {
+		set("Friendships",null);
+	} else {
+		set("Friendships",get("Friendships").replace(","+Friendshipname,""));
+	}
+	erase(Friendshipname);
+}
 function runSmartTags() {
 	for (var i = 0; i < Tags.length; i++) {
 		var tag = Tags[i].split("|");
