@@ -59,12 +59,19 @@ Use: &lt;input type="file" accept="image/*" onchange="uploadProfilePic('profile'
 
 NOTE!
 The following code is the user object constructor. It defines what properties your users will have. Add or remove properties but they must all be equal to a specific (not used otherwise) index of the properties array [which increment downwards].
+
 function user(properties) {
+
 	properties = properties.split("|");
+
 	this.u_name = properties[0];
+
 	this.u_email = properties[1];
+
 	this.u_password = properties[2];
+
 	this.u_biography = properties[3];
+
 }
 
 Post object functions
