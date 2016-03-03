@@ -3,6 +3,10 @@ Protous.js is a clever javascript library for adding real time backend functiona
 
 Protous uses javascript's localStorage capabilities to store keys and values in the browser, so users will be remembered even when the computer is shutdown. Protous is perfect for giving a full user experience to your web/hybrid application prototype. It's quick, easy, and powerful.
 
+#Including Protous Reference File
+How to include the Protous reference file as meta data in the head tag of the HTML document:
+<b>&lt;script type="text/javascript" src="http://brookestudios.com/library/protous/protous-v1.1.3.js"&gt;&lt;script&gt;</b>
+
 # Protous includes a Smart Tag system.
 Smart Tags are html tags that represent an output of data. By defining what values are to be given for specific tag names you can create your own tag system. For example:
 
