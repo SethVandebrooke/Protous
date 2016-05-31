@@ -163,3 +163,95 @@ getUsername()                                | string            | Returns the u
 getUser(username)                            | object            | Return the userObject for the given username.
 updateUser(username,OBJECT)                  | undefined         | Overrides the userObject for the given username with the given object.
 updateUserProperty(username,propertyToChange,value) | undefined  | Updates (or edits) a property of the userObject for the given username by changing it to the given value.
+
+##Form handling functions:
+
+Protous 4.0 has 3 form handling functions:
+```js
+getFormValues(ids);
+getWholeForm(formId);
+validateForm(formObject,arrayOfExpressions);
+```
+
+getFormValues gets the values of the form elements via the given element IDs and returns an object. In the form object, the properties are equal to the ID of the element and the value is the obviously the value of the element.
+Example:
+
+Say you had an html form:
+```html
+<form>
+<input type="text" id="username">
+<input type="email" id="email">
+<input type="password" id="password">
+</form>
+```
+And you ran the following code in the JavaScript console:
+```js
+var form = getFormValues('username,email,password');
+```
+You would see that form becomes an object with properties that hold the values of the form data.
+If you wanted to get the value of the username textfield you would merely need to say:
+```js
+form.username
+```
+This functionality allows you to specifically choose what elements to grab from, but if you make a form and you want all values from all of the form elements in the form then you should use the getWholeForm function...
+
+getWholeForm grabs the all of the values from a form and returns an object. What will the property names be equal to? That depends. If you give your elements IDs then it will use the IDs. If you use the Name attribute instead then that's what it will use. If you have no form of identification then it will simply assign a property name that is equal to the tagname of the element and a random number.
+Consider the following situation:
+
+You want to let a user signup with the following form:
+```html
+<form id="myform">
+<input type="text" id="username" placeholder="Username">
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<input type="password" id="password2" placeholder="Confirm password">
+</form>
+```
+
+You could easily grab all of the data like so:
+```js
+var form = getWholeForm("myform");
+```
+This automatically gathers and sorts the data into an object that is ready for use:
+```js
+app['users']['SignUp'](form.username,form);
+```
+This also works if you use names instead, or mix them both:
+```html
+<form id="myform">
+<input type="text" id="username" placeholder="Username">
+<input type="email" name="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<input type="password" name="password2" placeholder="Confirm password">
+</form>
+```
+Now that's all fine and dandy, but you wnat to make sure that your form data is validated bofore you go storing it.
+This is made easy with the validateForm function.
+The validateForm fucntion evaluations an array of expressions and returns true or false if the form data passes all of the tests or not.
+
+```js
+var myform = getWholeForm("myform");
+if ( validateForm(myform, ["Form.password==Form.password2"]) ){
+	app['users']['SignUp'](form.username,form);
+}
+```
+The above code checks to see if the password field and confirm password field values match before signing up the user.
+Notice that the properties are called using the "Form" object. That object stays the same no matter what your form object variable is actually called and is only used within the expressions inorder to reference the object that you passed to the function.
+The Form object (as you might have guessed) holds all the properties for testing, so any property in your form object that you passed into the function is automatically inhrited by the Form object.
+
+Lets say that you also want to test to make sure that there is an "@" symbol in the email field...
+That can be done like so:
+
+```js
+var myform = getWholeForm("myform");
+if ( validateForm(myform, ["Form.password==Form.password2","Form.email.replace('@','')!=Form.email"]) ){
+	//...
+}
+```
+As you can see, adding extra layers of validation is quick and easy to do with the validateForm function.
+
+
+Well thats it for the documentation SO FAR.
+More will be added soon enough, and if you have any questions or requests please leave them in the comments below!
+
+[Back to the top](#protous-v4)
