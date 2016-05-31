@@ -1,4 +1,9 @@
 #Protous v4
+
+[Documentation](#Documentation)
+
+[Getting Started](#Getting-Started)
+
 Protous is a module based API for bringing backend functionality to the client side.
 Uses for Protous include: prototyping, UI/UX testing, offline web applications, and HTML5 hybrid mobile apps.
 One of the advantages of Protous is that it gives you backend functionality without the need for any server or database, and it can be run entirely offline.
@@ -9,7 +14,7 @@ FEATURES:
 * Super Easy and customizable form handling
 * Data looping and markup templating - for displaying data such as posts,comments, etc...
 
-#Getting Started
+# Getting Started
 
 Note that Protous IS IN FACT MODULE BASED so IF YOU DO NOT UNDERSTAND MODULAR JS THEN LOOK IT UP! (Otherwise this will make no sense to you what so ever)
 
@@ -88,7 +93,7 @@ But that isn't needed.
 I hope this gave you a feel for what Protous 4 can do. This documentation will be improved upon soon, but let me know if you have any questions in the comments below.
 
 
-#Documentation
+# Documentation
 
 PROTOUS_MODULE.app is a constructor for creating the backend of an application.
 SYNTAX: app(DATA_SECTIONS, USER_ACCOUNT_SYSTEMS);
