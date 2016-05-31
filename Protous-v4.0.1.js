@@ -855,24 +855,24 @@ var PROTOUS_MODULE = (function() {
 	};
 })();
 var events = {
-  events: {},
+  list: {},
   respond: function (eventName, func) {
-    this.events[eventName] = this.events[eventName] || [];
-    this.events[eventName].push(func);
+    this.list[eventName] = this.list[eventName] || [];
+    this.list[eventName].push(func);
   },
   neglect: function(eventName, func) {
-    if (this.events[eventName]) {
-      for (var i = 0; i < this.events[eventName].length; i++) {
-        if (this.events[eventName][i] === func) {
-          this.events[eventName].splice(i, 1);
+    if (this.list[eventName]) {
+      for (var i = 0; i < this.list[eventName].length; i++) {
+        if (this.list[eventName][i] === func) {
+          this.list[eventName].splice(i, 1);
           break;
         }
       };
     }
   },
   trigger: function (eventName, data) {
-    if (this.events[eventName]) {
-      this.events[eventName].forEach(function(func) {
+    if (this.list[eventName]) {
+      this.list[eventName].forEach(function(func) {
         func(data);
       });
     }
