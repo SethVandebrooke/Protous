@@ -1,8 +1,10 @@
 #Protous v4
 
-[Documentation](#Documentation)
-
-[Getting Started](#Getting-Started)
+* [Getting Started](#getting-started)
+* [Documentation](#documentation)
+* [Application Syntax](#protous-application-syntax)
+* [DataSection Functions](#datasection-functions)
+* [User Account System Functions](#user-account-system-functions)
 
 Protous is a module based API for bringing backend functionality to the client side.
 Uses for Protous include: prototyping, UI/UX testing, offline web applications, and HTML5 hybrid mobile apps.
