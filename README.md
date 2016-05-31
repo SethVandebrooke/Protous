@@ -96,15 +96,32 @@ User Account Systems are exactly that
 Both parameters are strings with each section or system devided by a comma.
 Only one of the parameters need to be filled for the constructor to work. In order to bypass DataSections, simply set it to null.
 Neither Parameters require more than one element but if there are they MUST BE SEPARATED WITH COMMAS.
-----------------------
+
 
 DataSection functions:
 
-add(OBJECT)
-edit(whereThis,equalsThis,setThis,toThis)
-remove(whereThis,equalsThis)
-get(whereThis,equalsThis)
-listAll()
-search(whereThis,equalsThis)
-filter(whereThese,equalsThese)
-filterE(evaluations)
+Function                                    | Returns           | Description 
+------------------------------------------- | ----------------- | --------------------------------------------------------------------
+add(OBJECT)                                 | undefined         | Stores an object in the datasection
+edit(whereThis,equalsThis,setThis,toThis)   | undefined         | Changes a property's value of any object who's given property equals the given value.
+remove(whereThis,equalsThis)                | undefined         | Removes any object who's given property equals the given value.
+get(whereThis,equalsThis)                   | object            | Returns the object who's given property equals the given value.
+listAll()                                   | array of objects  | Returns all stored objects in the dataSection
+search(whereThis,equalsThis)                | array of objects  | Returns all objects who's given property equals the given value.
+filter(whereThese,equalsThese)              | array of objects  | Does the same as search but takes two arrays as parameters. One array of properties and another of values. All objects who's given properties equal the given values will be returned.
+filterE(evaluations)                        | array of objects  | Runs an evaluation against every object in the dataSection. Every object where the evaluation(s) are true are returned. NOTE in the evaluations, if you want to reference the object that the evaluation is being run against simply use "object": Example... object.name!==null
+
+
+User Account System functions:
+
+Function                                     | Returns            
+-------------------------------------------  | ----------------- 
+SignUp(username,properties,used)             | undefined         
+Login(username,password,wrongPass,noSuchUser)| undefined          
+LoginWEmail(email,password,wrongPass,noSuchUser)| undefined         
+logout()                    | undefined
+deleteUserAccount(username)                  | undefined
+getUsername()                                | string
+getUser(username)                            | object
+updateUser(username,OBJECT)                  | undefined 
+updateUserProperty(username,propertyToChange,value) | undefined
