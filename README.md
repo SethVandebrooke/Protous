@@ -1,104 +1,110 @@
-# Protous
-Protous.js is a clever javascript library for adding real time backend functionality to your prototypes without needing a server, database or knowledge of a backend programming language. 
+#Protous v4
+Protous is a module based API for bringing backend functionality to the client side.
+Uses for Protous include: prototyping, UI/UX testing, offline web applications, and HTML5 hybrid mobile apps.
+One of the advantages of Protous is that it gives you backend functionality without the need for any server or database, and it can be run entirely offline.
 
-Protous uses javascript's localStorage capabilities to store keys and values in the browser, so users will be remembered even when the computer is shutdown. Protous is perfect for giving a full user experience to your web/hybrid application prototype. It's quick, easy, and powerful.
+FEATURES:
+Create user account systems 
+Store, manipulate, and filter application data - for storing and handling data such as posts, comments, likes, images, etc...
+Super Easy and customizable form handling
+Data looping and markup templating - for displaying data such as posts,comments, etc...
 
-#Including Protous Reference File
-How to include the Protous reference file as meta data in the head tag of the HTML document:
+#Getting Started
+Note that Protous IS IN FACT MODULE BASED so IF YOU DO NOT UNDERSTAND MODULAR JS THEN LOOK IT UP! (Otherwise this will make no sense to you what so ever)
 
-<b>&lt;script type="text/javascript" src="http://brookestudios.com/library/protous/protous-v1.1.3.js"&gt; &lt;script&gt;</b>
+Lets say you want to test it out by making a simple online store application:
 
-# Protous includes a Smart Tag system.
-Smart Tags are html tags that represent an output of data. By defining what values are to be given for specific tag names you can create your own tag system. For example:
+var app = (function(){
+	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
+})();
 
-var Tags = new Array();
-Tags[0] = "hw|hello world";
+The above code sets up the backend of your application.
+Although it may not look like much...That middle line of code returns a super object full of functions for handling all data in your entire application and initializes your application storage.
+Don't belive me? Try running ( var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers"); ) in your javascript console and navigate the returned object.
+Now this short snippet of code creates the whole backend for your app but it is no use if you don't do anything with it...
 
-The above code states that whereever you place: &lt;hw&gt;&lt;/hw&gt; it will automatically change it to hello world.
-Now lets say you want to show the username of whoever is logged in using protous...
+var app = (function(){
+	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
+	events.respond('submitProduct', function(data){
+		backend['products'].add(data);
+	});
+})();
 
-var Tags = new Array();
-Tags[0] = "username|"+getUsername();
+The above code shows the use of the Protous event BUS (Which is technically a pubsub).
+It allows you "respond", "trigger", or "neglect" an event. In this case, we are storing the event data as the product object in the backend of the application.
+To trigger that event, you would say something like this:
 
-The above code defines that where there is &lt;username&gt;&lt;/username&gt; place the username of whoever is logged in.
+events.trigger('submitProduct', getWholeForm("form"));
 
-# Protous includes the following functions:
+Passing the data of the form, the submitProduct event is triggered and the assigned functions (from above) are run with the provided data.
+You can add as many event responses as wanted. These allow you to define how you want Protous to react.
+Now lets say you want to display all the products in a div from your DOM. The following HTML would do the trick:
 
-<b>RegisterUser(username,properties)</b> // Registers a username with the associated user properties
+<loop ds-name="products" logic-all="true">
+	<div class="product">
+		<h1>(-title-) - <b>(-price-)</b></h1>
+		<img src="(-image-)">
+		<p>(-description-)</p>
+	</div>
+</loop>
+<script>app.dsLogic();</script>
 
-Use: RegisterUser("John","John Green|Johng@gmail.com|password123|I am John");
-                          name       email           password    biography
+Assuming that your product objects have the following properties (title, price, description, and image) this would loop through all of your products (thus logic-all="true") and display the markup within the loop element (replacing the (-propertyName-)s with the property values) for each product that is stored. But wait, that won't work! You have not yet given app the dsLogic method. To import Protous functions simply return them as properties to your app object:
 
-<b>deleteUserAccount(username)</b> //Deletes a user based on the given username
+var app = (function(){
+	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
+	events.respond('userRegistered', function(data){
+		backend['customers'].SignUp(data.username,data.properties,data.used||null);
+	});
+	return {
+		dsLogic: backend.dsLogic
+	}; 
+})();
 
-Use: deleteUserAccount("John");
+You could include all of the data looping functions if you wanted:
 
-<b>Login(username,password)</b> //Validates the user credentials and stores the username in a session variable
+var app = (function(){
+	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
+	events.respond('userRegistered', function(data){
+		backend['customers'].SignUp(data.username,data.properties,data.used||null);
+	});
+	events.respond('submitProduct', function(data){
+		backend['product'].add(data);
+	});
+	return {
+		protousLogic: backend.ProtousLogic,
+		generateAllLoop: backend.generateAllLoop,
+		generateWhereLoop: backend.generateWhereLoop,
+		addAllLoop: backend.addWhereLoop,
+		addWhereLoop: backend.addWhereLoop,
+		dsLogic: backend.dsLogic,
+		logicLoop: backend.logicLoop
+	}; 
+})();
 
-Use: Login("John","password");
+But that isn't needed.
 
-<b>logout()</b> //Delets session variable and logs the user out
-
-Use: logout();
-
-<b>getUsername()</b> //Returns the name of the user that is logged in
-
-Use: var = username = getUsername();
-
-<b>getUser(username)</b> //Returns an object of the given user
-
-Use: var user = getUser(getUsername());
-
-<b>updateUser(username,properties)</b> //Updates a users properties
-
-Use: updateUser("John","John Green|example@gmail.com|password13|I am the John");
-
-<b>getProfilePicture(id)</b> //Sets the src value of an image tag to the profile picture data of whoever is logged in
-
-Use: getProfilePicture("profilepic");
-
-<b>uploadProfilePic(id,event)</b> //Uploads and saves the profile picture for the logged in user and sets the src of the given element to the image data
-
-Use: &lt;input type="file" accept="image/*" onchange="uploadProfilePic('profile',event)"&gt;
+I hope this gave you a feel for what Protous 4 can do. This documentation will be improved upon soon, but let me know if you have any questions in the comments below.
 
 
-NOTE!
-The following code is the user object constructor. It defines what properties your users will have. Add or remove properties but they must all be equal to a specific (not used otherwise) index of the properties array [which increment downwards].
+#Documentation
 
-function user(properties) {
+PROTOUS_MODULE.app is a constructor for creating the backend of an application.
+SYNTAX: app(DATA_SECTIONS, USER_ACCOUNT_SYSTEMS);
+DataSections are the types of data that you want to store and handle: posts, comments, products, messages, etc...
+User Account Systems are exactly that
+Both parameters are strings with each section or system devided by a comma.
+Only one of the parameters need to be filled for the constructor to work. In order to bypass DataSections, simply set it to null.
+Neither Parameters require more than one element but if there are they MUST BE SEPARATED WITH COMMAS.
+----------------------
 
-	properties = properties.split("|");
+DataSection functions:
 
-	this.u_name = properties[0];
-
-	this.u_email = properties[1];
-
-	this.u_password = properties[2];
-
-	this.u_biography = properties[3];
-
-}
-
-Post object functions
-
-<b>addPOST(postname,properties)</b> //Adds a post
-
-Use: POST.addPOST("post1","mypost|this is my post text|12/5/6|John");
-
-<b>getPOST(postname)</b> //Returns a post object
-
-Use: var mypost = POST.getPOST("post1");
-
-<b>listPOSTS()</b> //Returns an array of all post objects
-
-Use: var myposts = POST.listPOSTS();
-
-<b>updatePOST(postname,properties)</b> //Updates a post
-
-Use: POST.updatePOST("post1","new title|this is my new post text|12/5/6|John");
-
-<b>deletePOST(postname)</b> //Deletes a post
-
-Use: POST.deletePOST("post1");
-
-The same syntax for the post object functions applies to the comment, message, and friendship object functions.
+add(OBJECT)
+edit(whereThis,equalsThis,setThis,toThis)
+remove(whereThis,equalsThis)
+get(whereThis,equalsThis)
+listAll()
+search(whereThis,equalsThis)
+filter(whereThese,equalsThese)
+filterE(evaluations)
