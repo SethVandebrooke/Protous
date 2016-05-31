@@ -23,7 +23,7 @@ The MIT License (MIT)
 
   ----------------------------------------------------------------------------
 
-Protous 3.0 (The Object Oriented User Account System) : Developed by Seth Vandebrooke
+Protous 4.0 (The Modulue Based, Object Oriented, Client Side Backend API) : Developed by Seth Vandebrooke
 
                      Build Data Driven Prototypes
                     			Easily
