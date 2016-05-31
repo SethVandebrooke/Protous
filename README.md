@@ -98,7 +98,7 @@ Only one of the parameters need to be filled for the constructor to work. In ord
 Neither Parameters require more than one element but if there are they MUST BE SEPARATED WITH COMMAS.
 
 
-DataSection functions:
+##DataSection functions:
 
 Function                                    | Returns           | Description 
 ------------------------------------------- | ----------------- | --------------------------------------------------------------------
@@ -112,7 +112,7 @@ filter(whereThese,equalsThese)              | array of objects  | Does the same 
 filterE(evaluations)                        | array of objects  | Runs an evaluation against every object in the dataSection. Every object where the evaluation(s) are true are returned. NOTE in the evaluations, if you want to reference the object that the evaluation is being run against simply use "object": Example... object.name!==null
 
 
-User Account System functions:
+##User Account System functions:
 
 Function                                     | Returns            
 -------------------------------------------  | ----------------- 
