@@ -6,7 +6,7 @@
 * [Application Syntax](#protous-application-syntax)
 * [DataSection Functions](#datasection-functions)
 * [User Account System Functions](#user-account-system-functions)
-* [Form Handling Functions](#form-handling-functions:)
+* [Form Handling Functions](#form-handling-functions)
 
 # Introduction
 
