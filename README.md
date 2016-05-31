@@ -13,33 +13,33 @@ Data looping and markup templating - for displaying data such as posts,comments,
 Note that Protous IS IN FACT MODULE BASED so IF YOU DO NOT UNDERSTAND MODULAR JS THEN LOOK IT UP! (Otherwise this will make no sense to you what so ever)
 
 Lets say you want to test it out by making a simple online store application:
-
+```js
 var app = (function(){
 	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
 })();
-
+```
 The above code sets up the backend of your application.
 Although it may not look like much...That middle line of code returns a super object full of functions for handling all data in your entire application and initializes your application storage.
 Don't belive me? Try running ( var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers"); ) in your javascript console and navigate the returned object.
 Now this short snippet of code creates the whole backend for your app but it is no use if you don't do anything with it...
-
+```js
 var app = (function(){
 	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
 	events.respond('submitProduct', function(data){
 		backend['products'].add(data);
 	});
 })();
-
+```
 The above code shows the use of the Protous event BUS (Which is technically a pubsub).
 It allows you "respond", "trigger", or "neglect" an event. In this case, we are storing the event data as the product object in the backend of the application.
 To trigger that event, you would say something like this:
-
+```js
 events.trigger('submitProduct', getWholeForm("form"));
-
+```
 Passing the data of the form, the submitProduct event is triggered and the assigned functions (from above) are run with the provided data.
 You can add as many event responses as wanted. These allow you to define how you want Protous to react.
 Now lets say you want to display all the products in a div from your DOM. The following HTML would do the trick:
-
+```html
 <loop ds-name="products" logic-all="true">
 	<div class="product">
 		<h1>(-title-) - <b>(-price-)</b></h1>
@@ -48,9 +48,9 @@ Now lets say you want to display all the products in a div from your DOM. The fo
 	</div>
 </loop>
 <script>app.dsLogic();</script>
-
+```
 Assuming that your product objects have the following properties (title, price, description, and image) this would loop through all of your products (thus logic-all="true") and display the markup within the loop element (replacing the (-propertyName-)s with the property values) for each product that is stored. But wait, that won't work! You have not yet given app the dsLogic method. To import Protous functions simply return them as properties to your app object:
-
+```js
 var app = (function(){
 	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
 	events.respond('userRegistered', function(data){
@@ -60,9 +60,9 @@ var app = (function(){
 		dsLogic: backend.dsLogic
 	}; 
 })();
-
+```
 You could include all of the data looping functions if you wanted:
-
+```js
 var app = (function(){
 	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
 	events.respond('userRegistered', function(data){
@@ -81,7 +81,7 @@ var app = (function(){
 		logicLoop: backend.logicLoop
 	}; 
 })();
-
+```
 But that isn't needed.
 
 I hope this gave you a feel for what Protous 4 can do. This documentation will be improved upon soon, but let me know if you have any questions in the comments below.
