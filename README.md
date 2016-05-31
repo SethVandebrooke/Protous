@@ -152,14 +152,14 @@ filterE(evaluations)                        | array of objects  | Runs an evalua
 
 ##User Account System functions:
 
-Function                                     | Returns            
--------------------------------------------  | ----------------- 
-SignUp(username,properties,used)             | undefined         
-Login(username,password,wrongPass,noSuchUser)| undefined          
-LoginWEmail(email,password,wrongPass,noSuchUser)| undefined         
-logout()                    | undefined
-deleteUserAccount(username)                  | undefined
-getUsername()                                | string
-getUser(username)                            | object
-updateUser(username,OBJECT)                  | undefined 
-updateUserProperty(username,propertyToChange,value) | undefined
+Function                                     | Returns           | Description
+-------------------------------------------  | ----------------- | -------------------------------------------------------------------
+SignUp(username,userObject,used)             | undefined         | Registers a user account with the given userObject and runs a function (used) if the username has already been used. NOTE: the used parameter is optional.
+Login(username,password,wrongPass,noSuchUser)| undefined         | Logs the given user in if the username and password match and the user exists. If the user does not exist then it will run the function given for noSuchuser. Likewise if the password is incorrect then it will run the function given for wrongPass. Both wrongPass and noSuchUser are optional parameters.
+LoginWEmail(email,password,wrongPass,noSuchUser)| undefined      | Logs the given user in who's email is equal to the given email if the email and password match. wrongPass and noSuchUser act the same as the Login function.
+logout()                                     | undefined         | Logs the currently logged in user out.
+deleteUserAccount(username)                  | undefined         | Deletes the user with the given username.
+getUsername()                                | string            | Returns the username of the user that's logged in.
+getUser(username)                            | object            | Return the userObject for the given username.
+updateUser(username,OBJECT)                  | undefined         | Overrides the userObject for the given username with the given object.
+updateUserProperty(username,propertyToChange,value) | undefined  | Updates (or edits) a property of the userObject for the given username by changing it to the given value.
