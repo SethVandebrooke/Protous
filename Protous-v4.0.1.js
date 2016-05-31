@@ -854,13 +854,13 @@ var PROTOUS_MODULE = (function() {
 		logicLoop: logicLoop
 	};
 })();
-var events = {
-  list: {},
-  respond: function (eventName, func) {
+var events = (function() {
+  var list = {};
+  var respond = function (eventName, func) {
     this.list[eventName] = this.list[eventName] || [];
     this.list[eventName].push(func);
   },
-  neglect: function(eventName, func) {
+  var neglect = function(eventName, func) {
     if (this.list[eventName]) {
       for (var i = 0; i < this.list[eventName].length; i++) {
         if (this.list[eventName][i] === func) {
@@ -870,14 +870,19 @@ var events = {
       };
     }
   },
-  trigger: function (eventName, data) {
+  var trigger = function (eventName, data) {
     if (this.list[eventName]) {
       this.list[eventName].forEach(function(func) {
         func(data);
       });
     }
   }
-};
+  return {
+  	respond: respond,
+  	neglect: neglect,
+  	trigger: trigger
+  };
+})();
 /*
 //Setup Your App
 var app = (function(){
