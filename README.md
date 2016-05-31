@@ -4,12 +4,12 @@ Uses for Protous include: prototyping, UI/UX testing, offline web applications, 
 One of the advantages of Protous is that it gives you backend functionality without the need for any server or database, and it can be run entirely offline.
 
 FEATURES:
-Create user account systems 
-Store, manipulate, and filter application data - for storing and handling data such as posts, comments, likes, images, etc...
-Super Easy and customizable form handling
-Data looping and markup templating - for displaying data such as posts,comments, etc...
+* Create user account systems 
+* Store, manipulate, and filter application data - for storing and handling data such as posts, comments, likes, images, etc...
+* Super Easy and customizable form handling
+* Data looping and markup templating - for displaying data such as posts,comments, etc...
 
-#Getting Started
+##Getting Started
 Note that Protous IS IN FACT MODULE BASED so IF YOU DO NOT UNDERSTAND MODULAR JS THEN LOOK IT UP! (Otherwise this will make no sense to you what so ever)
 
 Lets say you want to test it out by making a simple online store application:
