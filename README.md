@@ -1,10 +1,14 @@
-#Protous v4
+<img src="https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/13307234_495543793970039_6324626786026809880_n.jpg?oh=e088c56de8fedafd51e75806f32cc2da&oe=57D2145F" alt="Protous Banner">
 
+## Contents
 * [Getting Started](#getting-started)
 * [Documentation](#documentation)
 * [Application Syntax](#protous-application-syntax)
 * [DataSection Functions](#datasection-functions)
 * [User Account System Functions](#user-account-system-functions)
+* [Form Handling Functions](#form-handling-functions:)
+
+# Introduction
 
 Protous is a module based API for bringing backend functionality to the client side.
 Uses for Protous include: prototyping, UI/UX testing, offline web applications, and HTML5 hybrid mobile apps.
@@ -254,4 +258,4 @@ As you can see, adding extra layers of validation is quick and easy to do with t
 Well thats it for the documentation SO FAR.
 More will be added soon enough, and if you have any questions or requests please leave them in the comments below!
 
-[Back to the top](#protous-v4)
+[Back to the top](#contents)
