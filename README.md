@@ -9,7 +9,8 @@ FEATURES:
 * Super Easy and customizable form handling
 * Data looping and markup templating - for displaying data such as posts,comments, etc...
 
-##Getting Started
+#Getting Started
+
 Note that Protous IS IN FACT MODULE BASED so IF YOU DO NOT UNDERSTAND MODULAR JS THEN LOOK IT UP! (Otherwise this will make no sense to you what so ever)
 
 Lets say you want to test it out by making a simple online store application:
@@ -97,6 +98,36 @@ Both parameters are strings with each section or system devided by a comma.
 Only one of the parameters need to be filled for the constructor to work. In order to bypass DataSections, simply set it to null.
 Neither Parameters require more than one element but if there are they MUST BE SEPARATED WITH COMMAS.
 
+##Protous Application Syntax
+
+```js
+var myApp = new PROTOUS_MODULE.app("posts,comments,likes","users");
+
+//Application Syntax: APP[DATASECTION][FUNCTION](PARAMETERS);
+myApp['posts']['add']({
+	title: "First Post",
+	body: "This is my first post.",
+	by: "Seth",
+	date: new Date();
+});
+//app section  function  parameters
+// |     |        |         |
+myApp['users']['SignUp']("SethV"/*Username */, {//User Object:
+	name: "Seth Vandebrooke",
+	password: "*******",
+	email: "example@example.com",
+	joined: new Date();
+}, function(){ //Function to run if the user already exists
+	alert("This username: "+username+" has already been used");
+});
+//Application Syntax^
+```
+Protous application syntax is quite simple: AppName, DataSectionORUserAccountSystem, FunctionToRun, and Parameters.
+As seen used above.
+```js
+APP[DATASECTION][FUNCTION](PARAMETERS);
+```
+Lists of functions and capabilities are below:
 
 ##DataSection functions:
 
