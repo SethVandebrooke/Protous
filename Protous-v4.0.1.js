@@ -23,7 +23,7 @@ The MIT License (MIT)
 
   ----------------------------------------------------------------------------
 
-Protous 4.0 (The Modulue Based, Object Oriented, Client Side Backend API) : Developed by Seth Vandebrooke
+Protous 4.0 (The Object Oriented User Account System) : Developed by Seth Vandebrooke
 
                      Build Data Driven Prototypes
                     			Easily
@@ -105,45 +105,45 @@ var PROTOUS_MODULE = (function() {
 		};
 		//SignUp a user by providing a username (as a string) and the user's properties (as an object).
 		//Optionally...If you want to perform a specific operation when the username was already used: You can fill in the "used" parameter with a function.
-		this.SignUp = function(username,userObject,used) {
+		this.SignUp = function(username,properties,used) {
 			if (get(username)===null) {
 				if (get(this.name)===null) {
 					var setup = [];
 					setup.push(username);
 					set(this.name,JSON.stringify(setup));
-					if (userObject!==null) {
-						if (typeof userObject == "object") {
-							if (userObject.password===null) {
+					if (properties!==null) {
+						if (typeof properties == "object") {
+							if (properties.password===null) {
 								console.log("Protous Error: Password property is required");
-							} else if (typeof userObject.password == "string") {
-								set(username,JSON.stringify(userObject));
+							} else if (typeof properties.password == "string") {
+								set(username,JSON.stringify(properties));
 							} else {
 								console.log("Protous Error: Password property must be a string");
 							}
 						} else {
-							console.log("Protous Error: The userObject parameter must be an object");
+							console.log("Protous Error: The properties parameter must be an object");
 						}
 					} else {
-						console.log("Protous Error: The userObject parameter is required");
+						console.log("Protous Error: The properties parameter is required");
 					}
 				} else {
 					var users = JSON.parse(get(this.name));
 					users.push(username);
 					set(JSON.stringify(users));
-					if (userObject!==null) {
-						if (typeof userObject == "object") {
-							if (userObject.password===null) {
+					if (properties!==null) {
+						if (typeof properties == "object") {
+							if (properties.password===null) {
 								console.log("Protous Error: Password property is required");
-							} else if (typeof userObject.password == "string") {
-								set(username,JSON.stringify(userObject));
+							} else if (typeof properties.password == "string") {
+								set(username,JSON.stringify(properties));
 							} else {
 								console.log("Protous Error: Password property must be a string");
 							}
 						} else {
-							console.log("Protous Error: The userObject parameter must be an object");
+							console.log("Protous Error: The properties parameter must be an object");
 						}
 					} else {
-						console.log("Protous Error: The userObject parameter is required");
+						console.log("Protous Error: The properties parameter is required");
 					}
 				}
 			} else if (typeof used == "object"){
@@ -843,49 +843,117 @@ var PROTOUS_MODULE = (function() {
 	      </div>
 	    </posts>
 	*/
+	var list = {};
+	var events = (function(list) {
+	  var respond = function (eventName, func) {
+	    list[eventName] = list[eventName] || [];
+	    list[eventName].push(func);
+	  }
+	  var neglect = function(eventName, func) {
+	    if (list[eventName]) {
+	      for (var i = 0; i < list[eventName].length; i++) {
+	        if (list[eventName][i] === func) {
+	          list[eventName].splice(i, 1);
+	          break;
+	        }
+	      };
+	    }
+	  }
+	  var trigger = function (eventName, data) {
+	    if (list[eventName]) {
+	      list[eventName].forEach(function(func) {
+	        func(data);
+	      });
+	    }
+	  }
+	  var exportSystem = function() {
+	  	return {
+		  	respond: respond,
+		  	neglect: neglect,
+		  	trigger: trigger
+		  };
+	  }
+	  return {
+	  	respond: respond,
+	  	neglect: neglect,
+	  	trigger: trigger
+	  };
+	})(list);
+    //URL Get MODULE
+    var GET = (function(w) {
+        var G = {};
+        var href = w.location.href;
+        if (href.split("?").join("")!=href) {
+            var data = href.substring(href.indexOf("?")+1, href.length);
+            data = decodeURIComponent(data);
+            data = data.split("&");
+            for (var i = 0; i < data.length; i++) {
+                var variable = data[i].split("=")[0];
+                var value = data[i].split("=")[1];
+                G[variable] = value;
+            }
+        }
+        return G;
+    })(window);
 	return {
 		app: protousApp,
+		eventSystem: events,
+        URLdata: GET,
 		protousLogic: ProtousLogic,
 		generateAllLoop: generateAllLoop,
 		generateWhereLoop: generateWhereLoop,
 		addAllLoop: addWhereLoop,
 		addWhereLoop: addWhereLoop,
 		dsLogic: dsLogic,
-		logicLoop: logicLoop
+		logicLoop: logicLoop,
+		import: function(module) {
+            return this[module];
+        }
 	};
 })();
-var events = (function() {
-  var list = {};
-  var respond = function (eventName, func) {
-    this.list[eventName] = this.list[eventName] || [];
-    this.list[eventName].push(func);
+var events = {
+  events: {},
+  respond: function (eventName, func) {
+    this.events[eventName] = this.events[eventName] || [];
+    this.events[eventName].push(func);
   },
-  var neglect = function(eventName, func) {
-    if (this.list[eventName]) {
-      for (var i = 0; i < this.list[eventName].length; i++) {
-        if (this.list[eventName][i] === func) {
-          this.list[eventName].splice(i, 1);
+  neglect: function(eventName, func) {
+    if (this.events[eventName]) {
+      for (var i = 0; i < this.events[eventName].length; i++) {
+        if (this.events[eventName][i] === func) {
+          this.events[eventName].splice(i, 1);
           break;
         }
       };
     }
   },
-  var trigger = function (eventName, data) {
-    if (this.list[eventName]) {
-      this.list[eventName].forEach(function(func) {
+  trigger: function (eventName, data) {
+    if (this.events[eventName]) {
+      for (var func in this.events[eventName]) {
         func(data);
-      });
+      }
     }
   }
-  return {
-  	respond: respond,
-  	neglect: neglect,
-  	trigger: trigger
-  };
-})();
+};
+function Module(script){
+	script = (script).toString();
+	script = script.substring(script.indexOf("{")+1, script.length-1);
+	var run = new Function(script);
+	this.execute = run;
+	this.main = (run());
+    this.refresh = function() {
+    	this.main = (run());
+    }
+	this.import = function(property, data){
+		this.main[property] = data;
+	}
+	this.export = function(property){
+		return this.main[property];
+	}
+}
 /*
 //Setup Your App
-var app = (function(){
+var app = (function(PROTOUS_MODULE){
 	var backend = new PROTOUS_MODULE.app("categories,products,cartProducts","customers");
 	events.respond('userRegistered', function(data){
 		backend['customers'].SignUp(data.username,data.properties,data.used||null);
@@ -902,7 +970,7 @@ var app = (function(){
 		dsLogic: backend.dsLogic,
 		logicLoop: backend.logicLoop
 	}; 
-})();
+})(PROTOUS_MODULE);
 
 var alertM = (function(){
 	function sendAlert(message) {
@@ -923,3 +991,4 @@ events.trigger('userRegistered', {
 });
 events.trigger('submitProduct', getWholeForm("form"));
 */
+
